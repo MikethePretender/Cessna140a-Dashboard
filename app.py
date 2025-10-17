@@ -94,6 +94,25 @@ df, kpis = compute_costs(
     insurance_full, insurance_liability,
     misc_per_hr, owners_count
 )
+def compute_projection(df, years:int, inflation_rate:float):
+    """Return a 5-year projection DataFrame with inflation."""
+    base = df.copy()
+    full = base.loc[base["Insurance Plan"]=="Full Coverage","Total Annual (USD)"].iloc[0]
+    liab = base.loc[base["Insurance Plan"]=="Liability Only","Total Annual (USD)"].iloc[0]
+
+    records=[]
+    for y in range(1, years+1):
+        inflation_factor=(1+inflation_rate/100)**(y-1)
+        records.append({
+            "Year":y,
+            "Full Coverage":int(full*inflation_factor),
+            "Liability Only":int(liab*inflation_factor)
+        })
+    proj=pd.DataFrame(records)
+    proj["Cumulative Full"]=proj["Full Coverage"].cumsum()
+    proj["Cumulative Liability"]=proj["Liability Only"].cumsum()
+    return proj
+
 
 # ---------- Output ----------
 col_table, col_kpi = st.columns([1.6, 1])
