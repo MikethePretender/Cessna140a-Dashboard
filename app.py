@@ -108,16 +108,44 @@ with col_kpi:
     st.metric("Base total (no insurance)", f"${kpis['Base Total (no insurance)']}")
 
 # chart
-fig = px.bar(
+# ---------- Charts ----------
+col1, col2 = st.columns(2)
+
+# Monthly per member chart
+fig_monthly = px.bar(
     df,
     x="Insurance Plan",
     y="Monthly per Member (USD/mo)",
     text="Monthly per Member (USD/mo)",
     title="Per-member Monthly Cost (0-dec)",
 )
-fig.update_traces(texttemplate="$%{text}", textposition="outside")
-fig.update_layout(yaxis_title="USD / month / member", xaxis_title="Insurance Plan", uniformtext_minsize=10)
-st.plotly_chart(fig, use_container_width=True)
+fig_monthly.update_traces(texttemplate="$%{text}", textposition="outside")
+fig_monthly.update_layout(
+    yaxis_title="USD / month / member",
+    xaxis_title="Insurance Plan",
+    uniformtext_minsize=10
+)
+
+# Cost per hour chart
+fig_hourly = px.bar(
+    df,
+    x="Insurance Plan",
+    y="Per Hour (USD/hr)",
+    text="Per Hour (USD/hr)",
+    title="Operating Cost per Flight Hour (0-dec)",
+)
+fig_hourly.update_traces(texttemplate="$%{text}", textposition="outside")
+fig_hourly.update_layout(
+    yaxis_title="USD / hr",
+    xaxis_title="Insurance Plan",
+    uniformtext_minsize=10
+)
+
+with col1:
+    st.plotly_chart(fig_monthly, use_container_width=True)
+with col2:
+    st.plotly_chart(fig_hourly, use_container_width=True)
+
 
 # export
 st.download_button(
