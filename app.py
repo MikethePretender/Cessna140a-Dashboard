@@ -7,8 +7,7 @@ import streamlit as st
 
 # ---------- Page setup ----------
 st.set_page_config(page_title="Cessna 140A Cost Dashboard", page_icon="🛩️", layout="wide")
-st.title("Cessna 140A — Operating Cost Dashboard
-")
+st.title("Cessna 140A — Operating Cost Dashboard (0-dec)")
 
 # Helpful: shows you're editing the right file and that Streamlit reloaded
 import time
