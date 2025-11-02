@@ -1,7 +1,6 @@
 streamlit
-numpy
-pandas
-matplotlib
 plotly
-reportlab
-openpyxl
+pandas
+numpy
+numba
+streamlit-lottie
